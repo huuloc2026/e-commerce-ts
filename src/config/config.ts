@@ -11,14 +11,17 @@ const envSchema = Joi.object().keys({
   PORT: Joi.string().required().default("4000"),
   SERVER_URL: Joi.string().required(),
   CORS_ORIGIN: Joi.string().required().default("*"),
+  //jwt
   ACCESS_TOKEN_SECRET: Joi.string().min(8).required(),
   ACCESS_TOKEN_EXPIRE: Joi.string().required().default("20m"),
   REFRESH_TOKEN_SECRET: Joi.string().min(8).required(),
   REFRESH_TOKEN_EXPIRE: Joi.string().required().default("1d"),
   REFRESH_TOKEN_COOKIE_NAME: Joi.string().required().default("jid"),
+  
   MYSQL_DATABASE: Joi.string().required(),
   MYSQL_ROOT_PASSWORD: Joi.string().required(),
   DATABASE_URL: Joi.string().required(),
+  //mail
   SMTP_HOST: Joi.string().required(),
   SMTP_PORT: Joi.string().default("587"),
   SMTP_USERNAME: Joi.string().required(),
@@ -68,6 +71,11 @@ const config = {
       },
     },
     from: validatedEnv.EMAIL_FROM,
+  },
+  db: {
+    uri: validatedEnv.DATABASE_URL,
+    nameDB: validatedEnv.MYSQL_DATABASE,
+    password: validatedEnv.MYSQL_ROOT_PASSWORD,
   },
 } as const;
 
