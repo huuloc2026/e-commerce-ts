@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql:8.0 
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword 
+      MYSQL_DATABASE: mysqlserver
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456 
+    ports:
+      - "3306:3306" 
+    networks:
+      - my-network
+    restart: always
+networks:
+  my-network:
+    driver: bridge

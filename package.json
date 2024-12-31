@@ -1,0 +1,44 @@
+{
+  "name": "refractor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx tsx watch src/server.ts"
+  },
+  "keywords": [],
+  "author": {
+    "name": "huuloc2026",
+    "link": "github.com/huuloc2026"
+  },
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "5.1.1",
+    "class-transformer": "0.5.1",
+    "class-validator": "0.14.1",
+    "cookie-parser": "1.4.7",
+    "cors": "2.8.5",
+    "dotenv": "16.4.7",
+    "express": "4.21.2",
+    "faker": "^4.1.0",
+    "helmet": "^6.0.1",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "9.0.2",
+    "reflect-metadata": "0.2.2",
+    "routing-controllers": "^0.7.6",
+    "ts-node": "10.9.2",
+    "tslint": "^5.11.0",
+    "tsx": "4.19.2",
+    "typedi": "0.10.0",
+    "typeorm": "0.3.20",
+    "typescript": "5.7.2",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^2.0.0",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^5.0.0",
+    "@types/reflect-metadata": "0.1.0",
+    "typescript-eslint-parser": "^18.0.0"
+  }
+}
