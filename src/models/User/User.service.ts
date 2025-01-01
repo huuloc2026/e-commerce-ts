@@ -1,48 +1,43 @@
 import { PrismaClient } from "@prisma/client";
 import { UserDTO } from "./DTO/UserDTO";
-import { IUserService } from "./IUserService";
 
-export class UserService implements IUserService {
+export class UserService {
   private prisma: PrismaClient;
 
   constructor() {
     this.prisma = new PrismaClient();
   }
+
   async createUser(data: UserDTO): Promise<any> {
     try {
-      const user = await this.prisma.user.create({
-        data,
-      });
-      return user; // Returning the newly created user
+      return await this.prisma.user.create({ data });
     } catch (error) {
       console.error("Error creating user:", error);
       throw new Error("Failed to create user");
     }
   }
-  async getUserById(id: string): Promise<any> {
-    `id`;
-  }
-  async updateUser(id: string, data: any): Promise<void> {
-    `data`;
-  }
-  async deleteUser(id: string): Promise<void> {
-    `id`;
-  }
-
-  findByEmail = async (email: string) => {
+  async getUserByEmail(email: string): Promise<any> {
     return await this.prisma.user.findUnique({
-      where: {
-        email: email,
-      },
+      where: { email },
     });
-  };
+  }
 
-  findByID = async (id: number) => {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        id: id,
-      },
+  async getUserById(id: number): Promise<any> {
+    return await this.prisma.user.findUnique({
+      where: { id },
     });
-    return user;
-  };
+  }
+
+  async updateUser(id: number, data: any): Promise<any> {
+    return await this.prisma.user.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async deleteUser(id: number): Promise<void> {
+    await this.prisma.user.delete({
+      where: { id },
+    });
+  }
 }

@@ -21,7 +21,7 @@ app.use(compression());
 
 
 const usercontroller = new UserController
-app.post("/", validateMiddleware(UserDTO),usercontroller.TestController);
+app.post("/", validateMiddleware(UserDTO),usercontroller.createUser);
 
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
