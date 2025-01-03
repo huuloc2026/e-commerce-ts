@@ -17,7 +17,7 @@ const envSchema = Joi.object().keys({
   REFRESH_TOKEN_SECRET: Joi.string().min(8).required(),
   REFRESH_TOKEN_EXPIRE: Joi.string().required().default("1d"),
   REFRESH_TOKEN_COOKIE_NAME: Joi.string().required().default("jid"),
-  
+
   MYSQL_DATABASE: Joi.string().required(),
   MYSQL_ROOT_PASSWORD: Joi.string().required(),
   DATABASE_URL: Joi.string().required(),
@@ -27,6 +27,11 @@ const envSchema = Joi.object().keys({
   SMTP_USERNAME: Joi.string().required(),
   SMTP_PASSWORD: Joi.string().required(),
   EMAIL_FROM: Joi.string().email().required(),
+
+  MONGO_URI: Joi.string().required(),
+  MONGO_DB_NAME: Joi.string().required(),
+  MONGO_USER: Joi.string().required(),
+  MONGO_PASSWORD: Joi.string().required(),
 });
 
 const { value: validatedEnv, error } = envSchema
@@ -41,7 +46,7 @@ if (error) {
   );
 }
 
-const config = {
+const envConfig = {
   node_env: validatedEnv.NODE_ENV,
   server: {
     port: validatedEnv.PORT,
@@ -77,6 +82,12 @@ const config = {
     nameDB: validatedEnv.MYSQL_DATABASE,
     password: validatedEnv.MYSQL_ROOT_PASSWORD,
   },
+  mongo: {
+    uri: validatedEnv.MONGO_URI,
+    dbName: validatedEnv.MONGO_DB_NAME,
+    userName: validatedEnv.MONGO_USER,
+    password: validatedEnv.MONGO_PASSWORD
+  }
 } as const;
 
-export default config;
+export default envConfig;

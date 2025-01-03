@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client"
+
 import { Expose } from "class-transformer"
 import { IsEmail, IsNotEmpty, IsOptional, MinLength } from "class-validator"
 
@@ -39,6 +39,6 @@ export class UserDTO {
 
   @Expose()
   @IsOptional()
-  role?:Role
+  role?:string
 }
 

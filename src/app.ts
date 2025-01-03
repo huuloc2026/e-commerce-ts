@@ -3,9 +3,9 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet"
 import morgan from "morgan";
 import compression from "compression";
-import { UserController } from "./models/User/User.controller";
-import { validateMiddleware } from "./middlewares/validatemiddleware";
-import { UserDTO } from "./models/User/DTO/UserDTO";
+
+import instanceMongoDb from "./database/data-source";
+import { checkOverload } from "./helpers/checkConnection.db";
 
 console.clear();
 
@@ -20,8 +20,7 @@ app.use(helmet())
 app.use(compression());
 
 
-const usercontroller = new UserController
-app.post("/", validateMiddleware(UserDTO),usercontroller.createUser);
+instanceMongoDb
 
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
