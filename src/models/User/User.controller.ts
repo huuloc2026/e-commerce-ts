@@ -19,7 +19,6 @@ export class UserController {
     });
   });
   
-
   //   getAllUser = asyncHandler(async (req, res) => {
   //   const user = await userService.getUserById();
   //   if (!user) {

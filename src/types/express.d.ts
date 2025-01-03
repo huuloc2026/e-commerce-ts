@@ -4,9 +4,7 @@ declare global {
     export interface Request {
       payload?: JwtPayload;
 
-      cookies: {
-        jid?: string;
-      };
+
     }
   }
 }
