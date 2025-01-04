@@ -2,7 +2,6 @@
 
 import { model, Schema, Document } from 'mongoose';
 
-
 export interface IShop extends Document {
     name: string;
     email: string;

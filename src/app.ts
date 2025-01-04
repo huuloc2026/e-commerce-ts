@@ -6,7 +6,7 @@ import morgan from "morgan";
 import compression from "compression";
 
 import instanceMongoDb from "./database/data-source";
-import routes from "./models/index.routes";
+import routes from "./routes/index.routes";
 
 
 
@@ -24,7 +24,8 @@ app.use(express.urlencoded({ limit: "50kb", extended: true }));
 app.use(cookieParser());
 
 app.use(routes)
-instanceMongoDb
+
+
 
 app.use(function (req, res, next) {
   if (res.headersSent) {
@@ -32,6 +33,8 @@ app.use(function (req, res, next) {
   }
   res.status(404).json({ error: 'page not found' });
 });
+instanceMongoDb
+
 
 
 export default app;
