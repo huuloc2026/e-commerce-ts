@@ -1,10 +1,9 @@
-import { Get, JsonController, Controller } from 'routing-controllers';
-import 'reflect-metadata';
+import { NextFunction, Request, Response } from "express"
+import { AuthService } from "../Auth/Auth.service"
 
-@Controller('/shops')  // Prefix /shops
 export class ShopController {
-    @Get('/test') // Route /test within /shops
-    getTest() {
-        return "Test endpoint";
+    static Register = async (req:Request,res:Response,next:NextFunction):Promise<any> => {
+        const register = await AuthService.SignUp(req.body)
+        return res.status(201).json(register)
     }
 }

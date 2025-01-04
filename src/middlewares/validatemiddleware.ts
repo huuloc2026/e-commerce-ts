@@ -16,6 +16,7 @@ export const validateMiddleware = (dtoClass: any) => {
           return Object.values(err.constraints || {}).join(", ");
         })
         .flat();
+        console.log("validate Middleware access");
         console.log(messages);
     }
     next();

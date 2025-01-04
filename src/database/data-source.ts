@@ -14,7 +14,7 @@ class MongoDBConnect {
         this.connect();
     }
 
-    connect(type = 'mongodb') {
+    async connect(type = 'mongodb') {
         if (envConfig.node_env === 'development') {
             mongoose.set('debug', true);
             mongoose.set('debug', { color: true });
@@ -27,6 +27,8 @@ class MongoDBConnect {
         .then(() => { })
         .catch((err) => console.log('Error connecting database: ' + err));
         
+        await mongoose.connection.dropDatabase();
+        console.log("cleared database");
         mongoose.connection.on('connected', () => {
             console.info('Connected to MongoDB!');
         });
@@ -40,12 +42,12 @@ class MongoDBConnect {
             mongoose.disconnect();
         });
 
-        mongoose.connection.on('disconnected', () => {
-            console.error(
-                `MongoDB disconnected! Reconnecting in ${10000 / 1000}s...`
-            );
-            setTimeout(() => this.connect(), 10000);
-        });
+        // mongoose.connection.on('disconnected', () => {
+        //     console.error(
+        //         `MongoDB disconnected! Reconnecting in ${10000 / 1000}s...`
+        //     );
+        //     setTimeout(() => this.connect(), 10000);
+        // });
     }
 
     static instance;

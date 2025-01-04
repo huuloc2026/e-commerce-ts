@@ -1,12 +1,20 @@
 
 
-const mongoose = require('mongoose'); // Erase if already required
+import { model, Schema, Document } from 'mongoose';
+
+
+export interface IShop extends Document {
+    name: string;
+    email: string;
+    password: string;
+    roles?: string;
+}
 
 const DOCUMENT_NAME = "SHOP"
 const COLLECTION_NAME = "SHOPS"
 
 // Declare the Schema of the Mongo model
-const shopSchema = new mongoose.Schema({
+const shopSchema:Schema = new Schema({
     name:{
         type:String,
         required:true,
@@ -29,17 +37,17 @@ const shopSchema = new mongoose.Schema({
     },
     verfiy:{
         type:Boolean,
-        default: false
     },
     roles:{
-        type:Array,
-        default:[]
+        type: String,
+        default:'USER',
+        enum: ["ADMIN", "CLIENT", "USER", "MODERATOR"]
     }
     
 },{
     timestamps:true,
     collection: COLLECTION_NAME
 });
+const ShopModel = model<IShop & Document>(DOCUMENT_NAME, shopSchema)
 
-//Export the model
-module.exports = mongoose.model(DOCUMENT_NAME, shopSchema);
+export default ShopModel

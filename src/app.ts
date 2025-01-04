@@ -6,32 +6,32 @@ import morgan from "morgan";
 import compression from "compression";
 
 import instanceMongoDb from "./database/data-source";
-import { createExpressServer } from "routing-controllers";
+import routes from "./models/index.routes";
 
-import { ShopController } from "./models/Shop/Shop.Controller";
+
 
 
 console.clear();
 
-const app = createExpressServer({
-  routePrefix: "/api", // All routes will be prefixed with /api
-  controllers: [ShopController], // Register your controllers here
-});
+
+const app = express()
 
 // Middleware
-app.use(morgan("dev"))
+// app.use(morgan("dev"))
 // app.use(helmet())
 app.use(express.json({ limit: "50kb" }));
 app.use(express.urlencoded({ limit: "50kb", extended: true }));
 app.use(cookieParser());
-app.use(compression());
 
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ error: 'Something went wrong' });
-});
-
+app.use(routes)
 instanceMongoDb
+
+app.use(function (req, res, next) {
+  if (res.headersSent) {
+    return next();
+  }
+  res.status(404).json({ error: 'page not found' });
+});
 
 
 export default app;

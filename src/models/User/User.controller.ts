@@ -1,4 +1,4 @@
-import asyncHandler from "src/helpers/asyncHandler";
+import asyncHandler from "src/middlewares/asyncHandler";
 import { UserService } from "./User.service";
 
 const userService = new UserService();
