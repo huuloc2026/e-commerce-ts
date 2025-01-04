@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from "express";
 
 
 export const validateMiddleware = (dtoClass: any) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const dtoInstance = plainToInstance(dtoClass, req.body, {
       excludeExtraneousValues: true,
     });
@@ -16,8 +16,9 @@ export const validateMiddleware = (dtoClass: any) => {
           return Object.values(err.constraints || {}).join(", ");
         })
         .flat();
-        console.log("validate Middleware access");
-        console.log(messages);
+        return res.status(401).json({
+          messages: messages[0],
+        })
     }
     next();
   };

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { ShopService } from "src/services/Shop.service"
+import { ShopService } from "src/modules/Shop/Shop.service"
 
 
 export class ShopController {

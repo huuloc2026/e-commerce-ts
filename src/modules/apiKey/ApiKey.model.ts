@@ -10,16 +10,14 @@ const ApikeySchema: Schema = new Schema({
     key: {
         type: String,
         required: true,
-        maxLength: 150,
     },
     status: {
         type: Boolean,
-        required: true,
-        unique: true,
+        default: true,
     },
-    permission: {
+    permissions: {
         type:[String],
-        required:true,
+        default: 'CLIENT',
         enum:['ADMIN','CLIENT','MOD']
     }
 

@@ -1,4 +1,4 @@
-import TOKENS from "src/models/token.model"
+import TOKENS from "src/modules/Token/token.model"
 
 
 

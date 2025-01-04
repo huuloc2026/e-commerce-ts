@@ -29,6 +29,14 @@ const shopSchema:Schema = new Schema({
         type: String,
         required: true,
     },
+    phone: {
+        type: String,
+        required:false,
+    },
+    dateOfBirth: {
+        type: Date,
+        required: false,
+    },
     status:{
         type:String,
         enum: ['active','inactive'],

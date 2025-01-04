@@ -1,6 +1,6 @@
-import { AppError } from "src/middlewares/error.response";
+import { AppError } from "src/core/error.response";
 import { IShop } from "../interface/Shop.interface";
-import ShopModel from "../models/Shop.model"
+import ShopModel from "../modules/Shop/Shop.model"
 import * as bcrypt from 'bcrypt'
 import crypto from 'crypto'
 import { CreateToken } from "src/helpers/jwtHepler";

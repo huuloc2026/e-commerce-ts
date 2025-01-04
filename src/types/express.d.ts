@@ -1,10 +1,12 @@
-import type { JwtPayload } from "jsonwebtoken";
+import { Request } from "express";
+
 declare global {
   namespace Express {
-    export interface Request {
-      payload?: JwtPayload;
-
-
+    interface Request {
+      objKey?: any;
     }
   }
+    interface Error {
+      status?: number; 
+    }
 }

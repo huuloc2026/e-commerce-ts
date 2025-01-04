@@ -27,8 +27,8 @@ class MongoDBConnect {
         .then(() => { })
         .catch((err) => console.log('Error connecting database: ' + err));
         
-        await mongoose.connection.dropDatabase();
-        console.log("cleared database");
+        // await mongoose.connection.dropDatabase();
+        // console.log("cleared database");
         mongoose.connection.on('connected', () => {
             console.info('Connected to MongoDB!');
         });

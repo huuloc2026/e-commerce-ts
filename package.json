@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/http-status-codes": "^1.2.0",
     "bcrypt": "5.1.1",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.1",
@@ -23,6 +24,7 @@
     "express": "4.21.2",
     "faker": "4.1.0",
     "helmet": "8.0.0",
+    "http-status-codes": "^2.3.0",
     "ioredis": "5.4.2",
     "jest": "29.7.0",
     "joi": "17.13.3",
@@ -42,17 +44,17 @@
     "winston": "3.17.0"
   },
   "devDependencies": {
-        "@types/ioredis": "5.0.0",
-    "@types/jest": "29.5.14",
-    "@types/node": "22.10.2",
-    "@types/redis": "4.0.11",
-    "@types/supertest": "6.0.2",
     "@types/bcrypt": "2.0.0",
     "@types/compression": "1.7.5",
     "@types/cookie-parser": "1.4.8",
     "@types/express": "5.0.0",
+    "@types/ioredis": "5.0.0",
+    "@types/jest": "29.5.14",
     "@types/morgan": "1.9.9",
+    "@types/node": "22.10.2",
+    "@types/redis": "4.0.11",
     "@types/reflect-metadata": "0.1.0",
+    "@types/supertest": "6.0.2",
     "typescript-eslint-parser": "18.0.0"
   }
 }

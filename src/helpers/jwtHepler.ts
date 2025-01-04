@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import envConfig from 'src/config/config';
-import crypto from 'crypto'
 
 
 
@@ -21,7 +20,7 @@ export const CreateToken = async (payload: IpayloadJWT, publicKey: string, priva
     const refresh_token = await jwt.sign(payload, privateKey as string, {
         expiresIn: REFRESH_TOKEN_EXPIRE_TIME,
     });
-    
+
     return {access_token,refresh_token}
 }
 // export const verifyAccessToken = (token: string) => {

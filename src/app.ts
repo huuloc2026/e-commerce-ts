@@ -1,40 +1,53 @@
 import "reflect-metadata";
 import express, { NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
-import helmet from "helmet"
+import helmet from "helmet";
 import morgan from "morgan";
 import compression from "compression";
 
 import instanceMongoDb from "./database/data-source";
 import routes from "./routes/index.routes";
 
-
-
-
 console.clear();
 
+// Initialize MongoDB
+instanceMongoDb;
 
-const app = express()
+// Create Express app
+const app = express();
 
 // Middleware
-// app.use(morgan("dev"))
-// app.use(helmet())
-app.use(express.json({ limit: "50kb" }));
-app.use(express.urlencoded({ limit: "50kb", extended: true }));
-app.use(cookieParser());
+app.use(morgan("dev")); // Logging
+app.use(helmet()); // Security headers
+app.use(compression()); // Response compression
+app.use(express.json({ limit: "50kb" })); // Parse JSON requests
+app.use(express.urlencoded({ limit: "50kb", extended: true })); // Parse URL-encoded requests
+app.use(cookieParser()); // Cookie parsing
 
-app.use(routes)
+// Routes
+app.use(routes);
 
-
-
-app.use(function (req, res, next) {
-  if (res.headersSent) {
-    return next();
-  }
-  res.status(404).json({ error: 'page not found' });
+// Handle 404 Errors
+app.use((req, res, next) => {
+  const error = new Error("Page not found") as any;
+  error.status = 404;
+  next(error);
 });
-instanceMongoDb
 
+// Global Error Handler
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  const status = err.status || 500;
+  const message = err.message || "Internal Server Error";
+
+  console.error(`[${new Date().toISOString()}] Error: ${message}`);
+  if (err.stack) console.error(err.stack);
+
+  res.status(status).json({
+    success: false,
+    status,
+    message,
+  });
+});
 
 
 export default app;
