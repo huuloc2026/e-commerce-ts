@@ -4,8 +4,6 @@ import {
     IsNotEmpty,
     IsOptional,
     IsPhoneNumber,
-    IsStrongPassword,
-    MaxLength,
 } from 'class-validator';
 
 export class CreateNewShopDTO {

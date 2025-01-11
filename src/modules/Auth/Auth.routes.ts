@@ -4,9 +4,12 @@ import { CreateNewShopDTO } from 'src/modules/Shop/DTO/CreateNewShopDTO'
 import { asyncHandler } from 'src/middlewares/AsyncHandler'
 import { validateMiddleware } from 'src/middlewares/validateDTOmiddleware'
 import { ShopController } from 'src/modules/Shop/Shop.Controller'
+import { apiKey } from 'src/middlewares/checkApi.middleware'
 
-const ShopRouter = express.Router()
+const AuthRouter = express.Router()
 
-ShopRouter.post('/shop', validateMiddleware(CreateNewShopDTO), asyncHandler(ShopController.Register))
 
-export default ShopRouter
+AuthRouter.use(apiKey);
+AuthRouter.post('/register', validateMiddleware(CreateNewShopDTO), asyncHandler(ShopController.Register))
+
+export default AuthRouter

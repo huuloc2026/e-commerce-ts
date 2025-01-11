@@ -2,8 +2,8 @@
 
 import { model, Schema, Document } from 'mongoose';
 
-const DOCUMENT_NAME = "TOKEN"
-const COLLECTION_NAME = "TOKENS"
+const DOCUMENT_NAME = "KEY-TOKEN"
+const COLLECTION_NAME = "KEY-TOKENS"
 
 
 const tokenSchema: Schema = new Schema({

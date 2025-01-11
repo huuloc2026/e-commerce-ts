@@ -1,13 +1,11 @@
 import { NextFunction, Request, Response } from "express";
+import { HEADERS } from "src/constants/header";
 import { ForbiddenError } from "src/core/error.response";
 import { findById } from "src/modules/apiKey/Apikey.service";
 
-enum HEADER {
-    API_KEY = 'x-api-key',
-    AUTHORIZATION = 'authorization'
-}
+
 export const apiKey = async (req: Request, res: Response, next: NextFunction):Promise<any> => {
-    const key = req.headers[HEADER.API_KEY]?.toString()
+    const key = req.headers[HEADERS.API_KEY]?.toString()
     if (!key) {
         return res.status(404).json({
             message: "key api not found"
@@ -28,7 +26,6 @@ export const checkPermission = (permission) => {
                 message: "permission denied"
             })
         }
-        console.log("permission:::",req.objKey.permissions);
         const validpermission= req.objKey.permissions.includes(permission)
         if(!validpermission){
             return res.status(403).json({

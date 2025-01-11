@@ -7,6 +7,7 @@ import compression from "compression";
 
 import instanceMongoDb from "./database/data-source";
 import routes from "./routes/index.routes";
+import envConfig from "src/config/config";
 
 console.clear();
 
@@ -25,7 +26,7 @@ app.use(express.urlencoded({ limit: "50kb", extended: true })); // Parse URL-enc
 app.use(cookieParser()); // Cookie parsing
 
 // Routes
-app.use(routes);
+app.use('/v1/api',routes);
 
 // Handle 404 Errors
 app.use((req, res, next) => {
@@ -40,7 +41,9 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const message = err.message || "Internal Server Error";
 
   console.error(`[${new Date().toISOString()}] Error: ${message}`);
-  if (err.stack) console.error(err.stack);
+  if (envConfig.node_env === "development") {
+    if (err.stack) console.error(err.stack);
+  }
 
   res.status(status).json({
     success: false,

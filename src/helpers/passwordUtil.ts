@@ -6,8 +6,8 @@ import bcrypt from "bcrypt";
  * @returns Promise<string> Mật khẩu đã mã hóa
  */
 export const hashPassword = async (password: string): Promise<string> => {
-  const saltRounds = 10; // Số vòng salt, càng cao càng an toàn nhưng lâu hơn
-  const hashedPassword = await bcrypt.hash(password, saltRounds); // Mã hóa mật khẩu
+  const saltRounds = 10; 
+  const hashedPassword = await bcrypt.hash(password, saltRounds); 
   return hashedPassword;
 };
 

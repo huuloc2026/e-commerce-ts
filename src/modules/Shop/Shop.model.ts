@@ -9,6 +9,13 @@ export interface IShop extends Document {
     roles?: string;
 }
 
+
+export enum RoleShop {
+    'admin'= 'ADMIN',
+    'mod'= 'MOD',
+    'user'= 'USER'
+}
+
 const DOCUMENT_NAME = "SHOP"
 const COLLECTION_NAME = "SHOPS"
 
@@ -42,13 +49,14 @@ const shopSchema:Schema = new Schema({
         enum: ['active','inactive'],
         default: 'inactive'
     },
-    verfiy:{
-        type:Boolean,
+    verfiy:{    
+        type:Schema.Types.Boolean,
+        default:false
     },
     roles:{
         type: String,
         default:'USER',
-        enum: ["ADMIN", "CLIENT", "USER", "MODERATOR"]
+        enum: ["ADMIN", "USER", "MODERATOR"]
     }
     
 },{

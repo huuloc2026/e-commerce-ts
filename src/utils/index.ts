@@ -4,8 +4,8 @@ import _ from 'lodash';
 import { Types } from 'mongoose';
 
 export const filterData = ({ 
-    data,
     fields,
+    data,
 }: {
     data: any; fields: Array<string>;
 }): object => {
