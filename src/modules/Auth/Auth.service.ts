@@ -10,7 +10,10 @@ import {
 } from "src/core/error.response";
 import ShopModel, { RoleShop } from "../Shop/Shop.model";
 import { IShop } from "src/interface/Shop.interface";
-import { hashPassword } from "src/helpers/passwordUtil";
+import { hashPassword, verifyPassword } from "src/helpers/passwordUtil";
+import { ILogin } from "src/interface/ILogin";
+import { findByEmail } from "src/modules/Shop/Shop.service";
+import { generatePairKey } from "src/helpers/generatepairkey";
 
 enum HEADER {
   API_KEY = "x-api-key",
@@ -18,10 +21,38 @@ enum HEADER {
 }
 
 export class AuthService {
-  static SignIn = async (data): Promise<any> => {};
+  static SignIn = async (data: ILogin): Promise<any> => {
+    //const existShop = await ShopModel.findOne({ email: data.email });
+    const existShop = await findByEmail({ email: data.email });
+    if (!existShop) {
+      throw new UnauthorizedError("Email NOT exists. Please register.");
+    }
+    const matchPassword = await verifyPassword(
+      data.password,
+      existShop.password
+    );
+    if (!matchPassword) {
+      throw new UnauthorizedError("password not match...");
+    }
+    const { publicKey, privateKey } = generatePairKey();
+    const tokens = await CreateToken(
+      { id: existShop._id, email: existShop.email },
+      publicKey,
+      privateKey
+    );
+    const keyStore = await KeyTokenService.saveKeyToken({
+      _id: existShop._id,       
+      publicKey,
+      privateKey,
+      refreshToken: tokens.refresh_token
+    });
+    if (!keyStore) {
+      throw new NotFoundError("Failed to store key pair. Please try again.");
+    }
+  };
   static SignUp = async (data: IShop): Promise<any> => {
     // Check if the shop already exists
-    const existShop = await ShopModel.findOne({ email: data.email })
+    const existShop = await ShopModel.findOne({ email: data.email });
     if (existShop) {
       throw new ConflictError(
         "Email already exists. Please use another email."
@@ -42,14 +73,14 @@ export class AuthService {
     }
 
     // Generate public and private keys
-    const publicKey = crypto.randomBytes(256).toString("base64");
-    const privateKey = crypto.randomBytes(256).toString("base64");
 
+    const { publicKey, privateKey } = generatePairKey();
     // Save the keys in the key store
     const keyStore = await KeyTokenService.saveKeyToken({
-      userId: newShop._id,
+      _id: newShop._id,
       publicKey,
       privateKey,
+      refreshToken: privateKey
     });
     if (!keyStore) {
       throw new NotFoundError("Failed to store key pair. Please try again.");
